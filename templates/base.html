@@ -1,0 +1,59 @@
+ <!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Monte Carlo Simulations{% endblock %}</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+			background-image: url("../static/background_img.jpg");
+        }
+
+        .navbar {
+            background-color: #2c3e50;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .navbar .brand {
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+			text-decoration: none;
+        }
+
+        .navbar .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 1rem;
+            font-size: 1rem;
+        }
+
+        .navbar .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        .content {
+            padding: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div>
+			<a class="brand" href="/">Monte Carlo Simulations</a>
+		</div>
+        <div class="nav-links">
+            <a href="/circle">Circle Area</a>
+            <a href="/ellipse">Ellipse Area</a>
+			<a href="{{ url_for('sphere') }}">Sphere Volume</a>
+        </div>
+    </div>
+
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

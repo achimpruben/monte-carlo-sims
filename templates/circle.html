@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% block title %}Circle Area{% endblock %}
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Monte Carlo Circle Area</title>
+    <style>
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto 30px auto;
+            background: #f0f0f0;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .row {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .result-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 40px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .plot {
+            max-width: 500px;
+            border: 2px solid #ccc;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .results {
+            background: #fdfdfd;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            min-width: 250px;
+        }
+
+        .results h2 {
+            margin-top: 0;
+            color: #34495e;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Monte Carlo Simulation: Area of a Circle</h1>
+
+        <form method="POST">
+            <div class="row">
+                <label for="num_points">Number of Points:</label>
+                <input type="number" name="num_points" min="100" required>
+            </div>
+            <div class="row">
+                <label for="rad_num">Circle Radius:</label>
+                <input type="number" name="rad_num" min="1" step="any" required>
+            </div>
+            <button type="submit">Estimate Area</button>
+        </form>
+
+        {% if area %}
+        <div class="result-container">
+            <div class="plot">
+                <img src="{{ url_for('static', filename='plot-circle.png') }}" alt="Monte Carlo Circle Plot" width="100%">
+            </div>
+            <div class="results">
+                <h2>Estimated Area: {{ area }}</h2>
+				{% if actual_area %}
+                    <h2>Actual Area: {{ actual_area }}</h2>
+                {% endif %}
+                {% if pi_estimate %}
+                    <h2>Estimated π: {{ pi_estimate }}</h2>
+                {% endif %}
+                {% if pi %}
+                    <h2>(Math) π: {{ pi }}</h2>
+                {% endif %}
+            </div>
+			{% if pi_estimate %}
+			<div>
+			    <h3>Convergence of π Estimate</h3>
+				<img src="{{ url_for('static', filename='pi_convergence.png') }}" alt="Pi Convergence Plot">
+				<form action="{{ url_for('reset_log') }}" method="get">
+					<button type="submit">Reset Log</button>
+				</form>
+			</div>
+			{% endif %}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
+
+
+{% endblock %}
